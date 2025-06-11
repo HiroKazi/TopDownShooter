@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class boundary
 {
-    public float xMin, xMax, yMin, yMax;
+    public float xMin, xMax, zMin, zMax;
 }
 public class PlayerMovement : MonoBehaviour
 {
@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 newPosition = rb.position + Movement * speed * Time.fixedDeltaTime;
 
         newPosition.x = Mathf.Clamp(newPosition.x, boundary.xMin, boundary.xMax);
-        newPosition.y = Mathf.Clamp(newPosition.y, boundary.yMin, boundary.yMax);
+        newPosition.z = Mathf.Clamp(newPosition.z, boundary.zMin, boundary.zMax);
 
         //Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
