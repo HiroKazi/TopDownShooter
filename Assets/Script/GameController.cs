@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -11,10 +13,22 @@ public class GameController : MonoBehaviour
     public float spawnWait;
     public float waveWait;
 
+    public bool isPaused;
+
+    [Header("Scene Index")]
+    [SerializeField] private int sceneIndex = 0;
+
+    [Header("Gameplay Buttons")]
+    public Button buttonResume;
+    public Button buttonPause;
+    public Button buttonMenu;
+
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnWaves());   
+        StartCoroutine(SpawnWaves());
+        buttonPause.onClick.AddListener(HandleButtonClick);
+        buttonResume.onClick.AddListener(HandleButtonClick);
     }
 
     IEnumerator SpawnWaves()
@@ -32,5 +46,35 @@ public class GameController : MonoBehaviour
             }
             yield return new WaitForSeconds(waveWait);
         }
+    }
+    public void ChangeScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+    private void HandleButtonClick()
+    {
+        if (isPaused)
+        {
+            Resume();
+            buttonPause.gameObject.SetActive(true);
+            buttonResume.gameObject.SetActive(false);
+        }
+        else
+        {
+            Pause();
+            buttonPause.gameObject.SetActive(false);
+            buttonResume.gameObject.SetActive(true);
+        }
+    }
+
+    void Pause()
+    {
+        Time.timeScale = 0f;
+        isPaused = true;
+    }
+    void Resume()
+    {
+        Time.timeScale = 1f;
+        isPaused = false;
     }
 }
