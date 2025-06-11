@@ -10,13 +10,11 @@ public class DestroyByContact : MonoBehaviour
     {
         if(other.tag == "Boundary")
         {
-            Destroy(gameObject);
+            return;
         }
-        if(other.tag == "player")
-        {
-            Destroy(gameObject);
-            Destroy(other.gameObject);
-        }
+        Destroy(gameObject);
+        Destroy(other.gameObject);
+        
        // Destroy(other.gameObject);
         
     }
